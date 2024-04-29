@@ -1,6 +1,6 @@
 const question = document.getElementById("question");
 const choices = Array.from(document.getElementsByClassName("choice-text"));
-const questionCounterText = document.getElementById('questionCounter');
+const questionCounterText = document.getElementById("questionCounterText");
 const scoreText = document.getElementById("score");
 
 let currentQuestion = {};
@@ -62,8 +62,8 @@ let questions = [
     
 
 ]
- const CORRECT_BONUS = 10;
- const MAX_QUESTIONS = 3;
+ const CORRECT_BONUS = 5;
+ const MAX_QUESTIONS = 7;
 
  startGame = () => {
      questionCounter = 0;
