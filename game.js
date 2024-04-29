@@ -92,7 +92,12 @@ let questions = [
         acceptingAnswers = false;
         const selectedChoice = e.target;
         const selectedAnswer = selectedChoice.dataset['number'];
-        console.log(selectedAnswer);
+        
+        const classToApply = selectedAnswer == currentQuestion.answer ? "correct" : "incorrect";
+
+        selectedChoice.parentElement.classList.add(classToApply);
+        // selectedChoice.parentElement.classList.remove(classToApply);
+
         getNewQuestion();
     });
  });
