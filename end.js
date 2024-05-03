@@ -18,13 +18,17 @@ saveHighScore = e => {
   e.preventDefault();
 
   const score = {
-    score: mostRecentScore;
+    score: Math.floor(Math.random() * 100),
     name: username.value
   };
   highScores.push(score);
 
   highScores.sort( (a,b) => {
     return b.score - a.score;
-  })
-  console.log(highScores)
+  });
+  highScores.splice(5);
+
+  localStorage.setItem("highScores", JSON.stringify(highScores));
+  window.location.assign("/");
+  console.log(highScores);
 };
