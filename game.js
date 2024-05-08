@@ -9,59 +9,41 @@ let score = 0;
 let questionCounter = 0;
 let availableQuestions = [];
 
-let questions = [
+let questions = [];
 
-    {
-        question: "Who is the founder of Pakistan?",
-        choice1: "Allama Iqbal",
-        choice2: "Liaquat Ali Khan",
-        choice3: "Quaid e Azam",
-        choice4: "fatima Jinnah",
-        answer: 3
-    },
-    {
-        question: "What is the capital of France?",
-        choice1: "Madrid",
-        choice2: "Berlin",
-        choice3: "Paris",
-        choice4: "Lisbon",
-        answer: 3
-    },
-    {
-        question: "Which planet is known as the Red Planet?",
-        choice1: "Earth",
-        choice2: "Mars",
-        choice3: "Jupiter",
-        choice4: "Venus",
-        answer: 2
-    },
-    {
-        question: "Who wrote 'Hamlet'?",
-        choice1: "Charles Dickens",
-        choice2: "William Shakespeare",
-        choice3: "Jane Austen",
-        choice4: "Mark Twain",
-        answer: 2
-    },
-    {
-        question: "What is the largest mammal on Earth?",
-        choice1: "Elephant",
-        choice2: "Blue Whale",
-        choice3: "Giraffe",
-        choice4: "Rhino",
-        answer: 2
-    },
-    {
-        question: "Which country is known as the Land of the Rising Sun?",
-        choice1: "China",
-        choice2: "Japan",
-        choice3: "South Korea",
-        choice4: "Thailand",
-        answer: 2
-    }
-    
+fetch(
+    "https://opentdb.com/api.php?amount=10&category=18&difficulty=easy&type=multiple"
+)
+.then(res => {
+    return res.json();
+})
+.then(loadedQuestions => {
+    console.log(loadedQuestions.results);
+    questions = loadedQuestions.results.map(loadedQuestions => {
+        const formattedQuestion = {
+            question: loadedQuestions.question
+        };
 
-]
+        const answerChoices = [...loadedQuestions.incorrect_answers];
+        formattedQuestions.answer = Math.floor(Math.random() * 7) + 1;
+        answerChoices.splice(
+            formattedQuestion.answer - 1,
+            0,
+            loadedQuestions.correct_answer
+        );
+
+        answerChoices.forEach((choice, index) => {
+            formattedQuestion["choice" + (index + 1)] = choice;
+        });
+
+        return formattedQuestion;
+    });
+    startGame();
+})
+.catch(err => {
+    console.error(err);
+});
+
  const CORRECT_BONUS = 5;
  const MAX_QUESTIONS = 7;
 
@@ -120,4 +102,3 @@ setTimeout( () => {
     score += num;
     scoreText.innerText = score;
  };
- startGame();
